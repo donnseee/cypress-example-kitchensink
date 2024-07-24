@@ -1,4 +1,4 @@
-name: "On Pull Request"
+name: "On Merge"
 
 on:
   workflow_dispatch
@@ -14,14 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Cypress tests
-        # normally you would write
-        # uses: cypress-io/github-action@v6
-        uses: ./
-        # the parameters below are only necessary
-        # because we are running these examples in a monorepo
-        with:
-          working-directory: examples/basic
+      - name: Cypress tests        
+        uses: cypress-io/github-action@v6
+        with:          
           # just for full picture after installing Cypress
           # print information about detected browsers, etc
           # see https://on.cypress.io/command-line#cypress-info
