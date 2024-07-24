@@ -19,3 +19,9 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: 20
+            
+        # Starts local server, then runs Cypress tests and records results on Cypress Cloud
+        - name: Cypress tests
+          run: |
+            npm start &
+            npx cypress run --record --parallel --group "Parallel 2x"
