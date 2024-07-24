@@ -8,21 +8,22 @@ on:
       #- develop
 
 jobs:
-  install:
-      name: Install npm and Cypress
-      runs-on: ubuntu-22.04
-      steps:
-        - uses: actions/checkout@v4
+  basic-ubuntu-20:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress tests
+        # normally you would write
+        # uses: cypress-io/github-action@v6
+        uses: ./
+        # the parameters below are only necessary
+        # because we are running these examples in a monorepo
+        with:
+          working-directory: examples/basic
+          # just for full picture after installing Cypress
+          # print information about detected browsers, etc
+          # see https://on.cypress.io/command-line#cypress-info
+          build: npx cypress info
   
-        # install a specific version of Node using
-        # https://github.com/actions/setup-node
-        - name: Use Node.js 20
-          uses: actions/setup-node@v4
-          with:
-            node-version: 20
-            
-        # Starts local server, then runs Cypress tests and records results on Cypress Cloud
-        - name: Cypress tests
-          run: |
-            npm start &
-            npx cypress run --record --parallel --group "Parallel 2x"
