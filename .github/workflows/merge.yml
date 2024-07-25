@@ -2,13 +2,13 @@ name: "On Merge"
 
 on:
   workflow_dispatch
-  #push:
-    #branches:
-      #- master
-      #- develop
+  push:
+    branches:
+      - master
+      - develop
 
 jobs:
-  basic-ubuntu-20:
+  chrome:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -19,4 +19,18 @@ jobs:
         with:          
           build: npm run build
           start: npm start
+          browser: chrome
+          
+    firefox:
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+  
+        - name: Cypress tests        
+          uses: cypress-io/github-action@v6
+          with:          
+            build: npm run build
+            start: npm start
+            browser: firefox
   
